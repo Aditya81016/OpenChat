@@ -1,0 +1,7 @@
+%box {
+  @apply px-5 py-3 rounded-xl;
+}
+
+@mixin transition($target: all, $curve: ease-in, $duration: 250ms) {
+  transition: $target $curve $duration;
+}

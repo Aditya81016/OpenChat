@@ -1,0 +1,88 @@
+@import "../modules/utils.scss";
+
+.chat {
+  @extend %box;
+  @apply flex flex-col gap-1 max-w-[60%] w-fit;
+  @include transition(filter);
+  > .username {
+    @apply font-bold;
+  }
+
+  > .time {
+    @apply text-sm;
+  }
+
+  // Themes
+  &.dark {
+    @apply bg-slate-900 text-white
+    hover:brightness-150;
+
+    > .time {
+      @apply text-slate-400;
+    }
+  }
+
+  &.light {
+    @apply bg-slate-300 text-black
+    hover:brightness-110;
+
+    > .time {
+      @apply text-slate-600;
+    }
+  }
+
+  // Variants
+  &.received {
+    @apply rounded-tl-none;
+  }
+
+  &.sent {
+    @apply rounded-tr-none bg-amber-500 text-black
+    hover:brightness-125;
+
+    > .username {
+      @apply hidden;
+    }
+
+    > .time {
+      @apply text-slate-800;
+    }
+  }
+}
+
+.dropdown {
+  @apply rounded-xl w-fit overflow-hidden absolute z-20;
+
+  > .task {
+    @extend %box;
+    @include transition(filter);
+    @apply rounded-none w-full pr-20 first-letter:capitalize;
+  }
+  // Variants
+  &.tl {
+    @apply rounded-tl-none;
+  }
+
+  &.tr {
+    @apply rounded-tr-none;
+  }
+
+  &.bl {
+    @apply rounded-bl-none;
+  }
+
+  &.br {
+    @apply rounded-br-none;
+  }
+
+  // Themes
+  &.dark > .task {
+    @apply bg-slate-800 text-white 
+      hover:brightness-150;
+  }
+
+  &.light > .task {
+    @apply bg-slate-200 text-black
+      hover:brightness-110;
+  }
+}
