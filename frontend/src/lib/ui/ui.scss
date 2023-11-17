@@ -86,3 +86,21 @@
       hover:brightness-110;
   }
 }
+
+.input {
+  @extend %box;
+  @include transition(filter);
+  @apply outline-none;
+
+  &.dark {
+    @apply bg-slate-900 text-white 
+    brightness-95
+    focus:brightness-150;
+  }
+
+  &.light {
+    @apply bg-slate-300 text-black 
+    brightness-95
+    focus:brightness-110;
+  }
+}
