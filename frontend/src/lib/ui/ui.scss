@@ -104,3 +104,18 @@
     focus:brightness-110;
   }
 }
+
+.button {
+  @extend %box;
+  @include transition(filter);
+  @apply w-14 h-14 p-0 text-[1.5rem]
+  hover:brightness-110;
+
+  &.primary {
+    @apply bg-amber-500 text-white;
+  }
+
+  &.secondary {
+    @apply bg-slate-800 text-amber-500;
+  }
+}
