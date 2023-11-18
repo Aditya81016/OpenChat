@@ -5,12 +5,13 @@ import { match } from "../modules/utils";
 
 // the props for the components
 interface Props {
-  theme: Theme;
-  tasks: any;
-  params?: any[];
-  target: string;
+  theme: Theme; // theme of the dropdown
+  tasks: any; // tasks the dropdown will perform
+  params?: any[]; // the parameters to pass to the tasks' callbacks
+  target: string; // the query for the target elements
 }
 
+// states of the dropdwon
 enum State {
   active = "active",
   inactive = "inactive",

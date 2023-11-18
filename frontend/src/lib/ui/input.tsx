@@ -6,7 +6,7 @@ interface Props {
   theme?: Theme; // the theme of the component
   type?: React.HTMLInputTypeAttribute | undefined; // the type of input
   placeholder?: string; // the placeholder of the input
-  width?: Tailwindest["width"];
+  width?: Tailwindest["width"]; // the width of the input as a tailwind class
   controllers: [
     string,
     /* type of setFunction from a useState hook */

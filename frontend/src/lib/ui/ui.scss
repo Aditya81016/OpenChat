@@ -32,11 +32,11 @@
   }
 
   // Variants
-  &.received {
+  &.secondary {
     @apply rounded-tl-none;
   }
 
-  &.sent {
+  &.primary {
     @apply rounded-tr-none bg-amber-500 text-black
     hover:brightness-125;
 
@@ -92,6 +92,7 @@
   @include transition(filter);
   @apply outline-none;
 
+  // Themes
   &.dark {
     @apply bg-slate-900 text-white 
     brightness-95
@@ -111,6 +112,7 @@
   @apply w-14 h-14 p-0 text-[1.5rem]
   hover:brightness-110;
 
+  // Variants
   &.primary {
     @apply bg-amber-500 text-white;
   }
@@ -118,4 +120,57 @@
   &.secondary {
     @apply bg-slate-800 text-amber-500;
   }
+}
+
+.user {
+  @extend %box;
+  @apply flex justify-between items-center w-full
+  hover:brightness-125;
+  @include transition(filter);
+
+  > .username {
+    @apply font-bold;
+  }
+
+  > .time {
+    @apply text-sm;
+  }
+
+  // Variants
+  &.primary {
+    @apply bg-amber-500 text-black;
+  }
+
+  &.secondary {
+    @apply bg-slate-800 text-white;
+  }
+}
+
+.action {
+  @extend %box;
+  @apply flex items-center gap-3 w-full
+  disabled:brightness-75
+  hover:brightness-125;
+  @include transition(filter);
+
+  > .icon {
+    @apply text-amber-500;
+  }
+
+  > .text {
+    @apply text-white font-bold;
+  }
+
+  // Theme
+  &.light > .text {
+    @apply text-black;
+  }
+
+  &.dark > .text {
+    @apply text-white;
+  }
+}
+
+body {
+  @apply bg-slate-900;
 }

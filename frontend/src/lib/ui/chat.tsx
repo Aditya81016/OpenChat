@@ -1,20 +1,19 @@
-import { Theme } from "../modules/types";
+import { Theme, Variant } from "../modules/types";
 import { Component, ReactNode } from "react";
 
 interface Props {
-  id?: string;
-  theme?: Theme;
-  variant?: "received" | "sent";
-  username?: string;
-  content: string;
-  time: string;
+  theme?: Theme; // theme of the chatblock
+  variant?: Variant; // variant of the chat block
+  username?: string; // username to display
+  content: string; // content to display
+  time: string; // time to display
 }
 
 export default class ChatBlock extends Component<Props> {
   render(): ReactNode {
     const {
       theme = Theme.light,
-      variant = "received",
+      variant = Variant.secondary,
       username,
       content,
       time,
