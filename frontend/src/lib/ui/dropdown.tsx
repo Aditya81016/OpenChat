@@ -2,10 +2,11 @@ import { Component, ReactNode, RefObject, createRef } from "react";
 import { Theme } from "../modules/types";
 import $ from "jquery";
 import { match } from "../modules/utils";
+import { themeStore } from "../modules/store";
 
 // the props for the components
 interface Props {
-  theme: Theme; // theme of the dropdown
+  theme?: Theme; // theme of the dropdown
   tasks: any; // tasks the dropdown will perform
   params?: any[]; // the parameters to pass to the tasks' callbacks
   target: string; // the query for the target elements
@@ -19,7 +20,7 @@ enum State {
 }
 
 export default class Dropdown extends Component<Props> {
-  dropdownRef: RefObject<HTMLDivElement>; // refrence to dropdown element
+  dropdownRef: RefObject<HTMLDivElement>; // reference to dropdown element
 
   state = {
     state: State.inactive, // determines whether dropdown is activated or not
@@ -27,6 +28,7 @@ export default class Dropdown extends Component<Props> {
     target: undefined, // the target of the dropdown
     corner: "tl", // the corner at which target is present
     dimensions: { width: 0, height: 0 }, // the dimensions of dropdown
+    theme: themeStore.getState().theme, // the theme of the component
   };
 
   constructor(props: Props) {
@@ -35,14 +37,21 @@ export default class Dropdown extends Component<Props> {
   }
 
   render(): ReactNode {
-    const { theme = Theme.light, tasks, params = [] } = this.props;
+    const { theme = this.state.theme, tasks, params = [] } = this.props;
     const { pos, state, corner, target } = this.state;
+
+    // handles theme
+    themeStore.subscribe(() => {
+      this.setState({
+        theme: themeStore.getState().theme,
+      });
+    });
 
     return (
       <>
         <div
           ref={this.dropdownRef}
-          className={`dropdown ${corner} ${theme} ${
+          className={`dropdown ui ${corner} ${theme} ${
             state === State.inactive
               ? "hidden"
               : state === State.pseudo

@@ -1,0 +1,35 @@
+.layout {
+  @apply w-screen h-screen overflow-auto p-10 max-sm:p-3;
+
+  &.pseudo {
+    @apply w-full h-full;
+  }
+  &.light {
+    @apply bg-slate-50 text-black;
+  }
+  &.dark {
+    @apply bg-slate-950 text-white;
+  }
+}
+
+.ui-library.layout {
+  > .theme-toggle {
+    @apply fixed bottom-5 right-5 z-10;
+  }
+  > .details {
+    @apply w-full flex flex-col items-center py-10;
+    @extend %box;
+
+    > p {
+      opacity: 0.8;
+    }
+  }
+
+  > .components {
+    @apply w-full;
+    > .component {
+      @extend %box;
+      @apply w-full;
+    }
+  }
+}

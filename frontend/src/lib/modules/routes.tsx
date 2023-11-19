@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../../pages/home";
-import UI from "../../pages/ui";
+import Home from "../../layouts/home.layout";
+import UILibraryPage from "../../pages/ui-library";
 
 export default createBrowserRouter([
   {
@@ -9,6 +9,10 @@ export default createBrowserRouter([
   },
   {
     path: "/ui-library",
-    element: <UI />,
+    element: <UILibraryPage />,
+  },
+  {
+    path: "*",
+    element: <h1>404 Not Found</h1>,
   },
 ]);

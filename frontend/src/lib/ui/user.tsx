@@ -13,7 +13,7 @@ export default class UserBlock extends Component<Props> {
 
     return (
       <>
-        <div className={`user ${variant}`}>
+        <div className={`user ui ${variant}`}>
           <div className="username">{username}</div>
           <div className="time">Joined at {time}</div>
         </div>

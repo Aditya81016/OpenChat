@@ -1,7 +1,7 @@
 import { Component, ReactNode } from "react";
 
-export default class UI extends Component {
+export default class Home extends Component {
   render(): ReactNode {
-    return <>UI</>;
+    return <h1>Home Page</h1>;
   }
 }

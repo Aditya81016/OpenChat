@@ -1,5 +1,6 @@
 import { Component, ReactNode } from "react";
 import { Theme } from "../modules/types";
+import { themeStore } from "../modules/store";
 
 interface Props {
   theme?: Theme; // theme of the action block
@@ -7,13 +8,17 @@ interface Props {
   iconOn?: "left" | "right"; // position of the icon
   text: string; // text to display
   callback: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; // the onClick callback for the action
-  disabled?: boolean; // diables the task if true
+  disabled?: boolean; // disables the task if true
 }
 
 export default class ActionBlock extends Component<Props> {
+  state = {
+    theme: themeStore.getState().theme,
+  };
+
   render(): ReactNode {
     const {
-      theme = Theme.light,
+      theme = this.state.theme,
       icon,
       iconOn = "left",
       text,
@@ -23,10 +28,17 @@ export default class ActionBlock extends Component<Props> {
 
     const flex = { left: "flex-row", right: "flex-row-reverse" }[iconOn];
 
+    // handles theme
+    themeStore.subscribe(() => {
+      this.setState({
+        theme: themeStore.getState().theme,
+      });
+    });
+
     return (
       <>
         <button
-          className={`action ${theme} ${flex}`}
+          className={`action ui ${theme} ${flex}`}
           onClick={callback}
           disabled={disabled}
         >

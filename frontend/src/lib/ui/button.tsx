@@ -1,5 +1,6 @@
 import { Component, ReactNode } from "react";
 import { Variant } from "../modules/types";
+import { themeStore } from "../modules/store";
 
 interface Props {
   variant?: Variant; // variant of the button
@@ -20,7 +21,7 @@ export default class Button extends Component<Props> {
     return (
       <>
         <button
-          className={`button ${variant}`}
+          className={`button ui ${variant}`}
           onClick={callback}
           disabled={disabled}
         >

@@ -1,0 +1,21 @@
+@import "../lib/modules/utils.scss";
+
+.page {
+  @apply w-full h-full;
+}
+
+.ui-library.page {
+  .library {
+    @apply w-full;
+
+    &.chat > .container {
+      @extend %box;
+      @apply flex flex-col w-full gap-3 py-5 bg-slate-700;
+    }
+    &.input,
+    &.button,
+    &.user {
+      @apply flex flex-col gap-5;
+    }
+  }
+}
