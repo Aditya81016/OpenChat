@@ -1,14 +1,19 @@
 import { Component, ReactNode } from "react";
-import { Variant } from "../../lib/modules/types";
 import ActionBlock from "../../lib/ui/action";
 
-export default class ActionLibrary extends Component {
+interface Props {
+  disabled: boolean;
+}
+
+export default class ActionLibrary extends Component<Props> {
   render(): ReactNode {
+    const { disabled } = this.props;
     return (
       <div className="action library">
         <h2>ActionBlock</h2>
         <div className="flex max-md:flex-col justify-evenly gap-5">
           <ActionBlock
+            disabled={disabled}
             text="Setting"
             icon="cog"
             iconOn="right"
@@ -17,6 +22,7 @@ export default class ActionLibrary extends Component {
             }}
           />
           <ActionBlock
+            disabled={disabled}
             text="About"
             icon="info"
             callback={() => {

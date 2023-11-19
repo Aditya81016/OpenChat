@@ -111,16 +111,19 @@
   @extend %box;
   @include transition(filter);
   @apply w-14 h-14 p-0 text-[1.5rem]
-  flex justify-center items-center
-  hover:brightness-110;
+  flex justify-center items-center;
 
   // Variants
   &.primary {
-    @apply bg-amber-500 text-white;
+    @apply bg-amber-500 text-white
+    hover:brightness-110
+    disabled:brightness-95;
   }
 
   &.secondary {
-    @apply bg-slate-800 text-amber-500;
+    @apply bg-slate-800 text-amber-500
+    hover:brightness-125
+    disabled:brightness-75;
   }
 }
 

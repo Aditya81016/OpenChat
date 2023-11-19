@@ -13,9 +13,10 @@
 }
 
 .ui-library.layout {
-  > .theme-toggle {
-    @apply fixed bottom-5 right-5 z-10;
+  > .toggles {
+    @apply fixed bottom-5 right-5 z-10 flex gap-5;
   }
+
   > .details {
     @apply w-full flex flex-col items-center py-10;
     @extend %box;
