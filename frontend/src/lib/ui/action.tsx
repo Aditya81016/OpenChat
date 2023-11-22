@@ -5,6 +5,7 @@ import { themeStore } from "../modules/store";
 interface Props {
   theme?: Theme; // theme of the action block
   icon: string; // icon of display
+  iconParent?: string; // the parent library for your icon
   iconOn?: "left" | "right"; // position of the icon
   text: string; // text to display
   callback: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; // the onClick callback for the action
@@ -20,6 +21,7 @@ export default class ActionBlock extends Component<Props> {
     const {
       theme = this.state.theme,
       icon,
+      iconParent = "solid",
       iconOn = "left",
       text,
       callback,
@@ -43,7 +45,7 @@ export default class ActionBlock extends Component<Props> {
           disabled={disabled}
         >
           <div className="icon">
-            <i className={`fa-solid fa-${icon}`}></i>
+            <i className={`fa-${iconParent} fa-${icon}`}></i>
           </div>
           <div className="text">{text}</div>
         </button>

@@ -1,11 +1,17 @@
 import { Component, ReactNode } from "react";
 import Input from "../../lib/ui/input";
 
-export default class InputLibrary extends Component {
+interface Props {
+  disabled: boolean;
+}
+
+export default class InputLibrary extends Component<Props> {
   state = {
     value: "",
   };
   render(): ReactNode {
+    const { disabled } = this.props;
+
     const setValue = (value: string) => {
       this.setState({ value });
     };
@@ -16,6 +22,7 @@ export default class InputLibrary extends Component {
           <Input
             placeholder="Enter some text"
             controllers={[this.state.value, setValue]}
+            disabled={disabled}
           />
           <div>
             <b>value: </b>

@@ -85,6 +85,7 @@ export default class Dropdown extends Component<Props> {
 
     // add event listeners on document to disable the dropdown
     $(document).on("click", this.disableDropdown);
+    $(document).on("touchstart", this.disableDropdown);
 
     this.getDimensions();
   }
@@ -95,6 +96,7 @@ export default class Dropdown extends Component<Props> {
 
     // remove event listener when component unmounts
     $(document).off("click", this.disableDropdown);
+    $(document).on("touchstart", this.disableDropdown);
   }
 
   // the function to be called when user triggers dropdown

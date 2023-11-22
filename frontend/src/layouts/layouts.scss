@@ -1,5 +1,5 @@
 .layout {
-  @apply w-screen h-screen overflow-auto p-10 max-sm:p-3;
+  @apply w-screen h-[100dvh] overflow-auto;
 
   &.pseudo {
     @apply w-full h-full;
@@ -13,6 +13,7 @@
 }
 
 .ui-library.layout {
+  @apply p-10 max-md:p-3;
   > .toggles {
     @apply fixed bottom-5 right-5 z-10 flex gap-5;
   }
@@ -31,6 +32,72 @@
     > .component {
       @extend %box;
       @apply w-full;
+    }
+  }
+}
+
+.home.layout {
+  @apply flex p-5 gap-5;
+
+  > .dashboard-toggle {
+    @apply fixed top-5 left-5 z-10 md:hidden;
+  }
+
+  > .left {
+    @apply h-full w-full flex flex-col gap-5;
+
+    > .chats {
+      @apply w-full h-full flex flex-col gap-3 overflow-y-auto max-md:pt-20;
+    }
+
+    > .inputs {
+      @apply w-full;
+
+      > * {
+        @apply w-full flex gap-5;
+      }
+    }
+  }
+  > .right {
+    @apply h-full min-w-[20rem] w-1/3 bg-slate-900 rounded-xl flex flex-col gap-5 p-5
+    max-md:fixed top-0 right-[100vw] z-20 max-md:w-[100vw] max-md:rounded-none;
+    @include transition(right);
+
+    &.active {
+      @apply right-0;
+    }
+
+    > .navbar {
+      @apply md:hidden flex items-center justify-between;
+      > .brand {
+        @apply text-4xl font-black text-white text-right;
+      }
+    }
+
+    > .users {
+      @apply w-full h-full flex flex-col gap-3 overflow-y-auto;
+
+      > .primary {
+        @apply order-1;
+      }
+      > .secondary {
+        @apply order-2;
+      }
+    }
+
+    > .nav {
+      @apply w-full flex flex-col gap-5;
+
+      > .brand {
+        @apply text-4xl font-black text-white text-right max-md:hidden;
+      }
+      > .controllers {
+        @apply w-full h-full flex justify-between items-end;
+
+        > .links {
+          @apply w-full flex flex-col gap-1;
+        }
+      }
     }
   }
 }

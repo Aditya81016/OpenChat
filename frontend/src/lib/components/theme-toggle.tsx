@@ -3,12 +3,18 @@ import Button from "../ui/button";
 import { themeStore } from "../modules/store";
 import { Theme } from "../modules/types";
 
-export default class ThemeToggle extends Component {
+interface Props {
+  disabled?: boolean;
+}
+
+export default class ThemeToggle extends Component<Props> {
   state = {
     theme: themeStore.getState().theme,
     icon: themeStore.getState().icon,
   };
   render(): ReactNode {
+    const { disabled } = this.props;
+
     // handles theme
     const { theme, icon } = this.state;
     themeStore.subscribe(() => {
@@ -25,7 +31,7 @@ export default class ThemeToggle extends Component {
 
     return (
       <div className="theme-toggle">
-        <Button icon={icon} callback={callback} />
+        <Button icon={icon} callback={callback} disabled={disabled} />
       </div>
     );
   }

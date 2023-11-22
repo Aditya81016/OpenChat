@@ -2,7 +2,7 @@
 
 .chat.ui {
   @extend %box;
-  @apply flex flex-col gap-1 max-w-[60%] w-fit;
+  @apply flex flex-col gap-1 max-w-[80%] w-fit;
   @include transition(filter);
   > .username {
     @apply font-bold;
@@ -97,13 +97,15 @@
   &.dark {
     @apply bg-slate-900 text-white 
     brightness-95
-    focus:brightness-150;
+    focus:brightness-150
+    disabled:brightness-75;
   }
 
   &.light {
     @apply bg-slate-300 text-black 
     brightness-95
-    focus:brightness-110;
+    focus:brightness-110
+    disabled:brightness-75;
   }
 }
 
@@ -152,14 +154,17 @@
 }
 
 .action.ui {
-  @extend %box;
-  @apply flex items-center gap-3 w-full
+  @apply flex items-center gap-3 w-full 
   disabled:brightness-75
   hover:brightness-125;
   @include transition(filter);
 
+  &:hover > .text {
+    @apply underline;
+  }
+
   > .icon {
-    @apply text-amber-500;
+    @apply text-amber-500 h-5 w-5 flex justify-center items-center;
   }
 
   > .text {

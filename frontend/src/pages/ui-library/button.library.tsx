@@ -23,7 +23,7 @@ export default class ButtonLibrary extends Component<Props> {
               console.log("send primary button");
             }}
           />
-          <ThemeToggle />
+          <ThemeToggle disabled={disabled} />
         </div>
       </div>
     );

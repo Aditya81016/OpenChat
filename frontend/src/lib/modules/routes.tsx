@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../../layouts/home.layout";
 import UILibraryPage from "../../pages/ui-library";
+import HomePage from "../../pages/home";
 
 export default createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <HomePage />,
   },
   {
     path: "/ui-library",

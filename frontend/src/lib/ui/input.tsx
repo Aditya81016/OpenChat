@@ -1,4 +1,4 @@
-import { Component, ReactNode, useState } from "react";
+import { Component, ReactNode } from "react";
 import { Theme } from "../modules/types";
 import { Tailwindest } from "tailwindest";
 import { themeStore } from "../modules/store";
@@ -13,6 +13,7 @@ interface Props {
     /* type of setFunction from a useState hook */
     React.Dispatch<React.SetStateAction<string>> | ((value: string) => void)
   ]; // an array containing the variable and function from a useState hook to control the value of the input
+  disabled?: boolean;
 }
 
 export default class Input extends Component<Props> {
@@ -27,6 +28,7 @@ export default class Input extends Component<Props> {
       placeholder = "",
       width = "w-full",
       controllers,
+      disabled = false,
     } = this.props;
     const [value, setValue] = controllers;
 
@@ -44,6 +46,7 @@ export default class Input extends Component<Props> {
           placeholder={placeholder}
           className={`input ui ${theme} ${width}`}
           value={value}
+          disabled={disabled}
           onInput={(e) => {
             // @ts-ignore
             setValue(e.target.value);

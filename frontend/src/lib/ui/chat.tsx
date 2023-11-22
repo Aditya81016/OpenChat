@@ -5,7 +5,7 @@ import { Component, ReactNode } from "react";
 interface Props {
   theme?: Theme; // theme of the chatblock
   variant?: Variant; // variant of the chat block
-  username?: string; // username to display
+  username: string; // username to display
   content: string; // content to display
   time: string; // time to display
 }
