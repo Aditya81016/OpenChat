@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(BackendApplication.class, args);
+  }
 
-	@GetMapping("/error")
-	public String error() {
-		return "There was an error";
-	}
+  @GetMapping
+  public static String root() {
+    return "OpenChat API";
+  }
+
 }

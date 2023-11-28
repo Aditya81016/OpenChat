@@ -5,6 +5,8 @@ import Button from "../../lib/ui/button";
 import { Variant } from "../../lib/modules/types";
 import { getTime } from "../../lib/modules/utils";
 import $ from "jquery";
+import { wsClient } from "../../lib/modules/store";
+import { Frame, Message } from "stompjs";
 
 export default class HomePage extends Component {
   // Variables
@@ -90,10 +92,13 @@ export default class HomePage extends Component {
       },
     ],
     value: "",
+    sent: false,
   };
 
   // the dropdown tasks
   dropdownTasks = {
+    // the key is the query for the dropdown targets
+    // the value is an object with method to map to dropdown tasks
     ".chats": {
       create: () => {
         console.log("Create");
@@ -126,6 +131,7 @@ export default class HomePage extends Component {
 
   componentDidMount(): void {
     this.toRecentChats();
+    wsClient.connect({}, this.onSocketConnect);
   }
 
   // Renders
@@ -142,34 +148,60 @@ export default class HomePage extends Component {
   };
 
   // Methods
-  setValue = (value: string) => {
+  setValue = (value: string): void => {
     this.setState({
       value,
     });
   };
 
-  onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  onSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
+    const { chats, value } = this.state;
+
     if (this.state.value !== "") {
+      const message = {
+        username: "You",
+        content: value,
+        time: getTime(),
+      };
+
+      wsClient.send("/app/messages", {}, JSON.stringify(message));
+
       this.setState({
         value: "",
-        chats: [
-          ...this.state.chats,
-          {
-            username: "You",
-            content: this.state.value,
-            time: getTime(),
-          },
-        ],
+        chats: [...chats, message],
+        sent: true,
       });
+
       this.toRecentChats();
     }
   };
 
-  toRecentChats = () => {
+  toRecentChats = (): void => {
     setTimeout(() => {
       $(".chats").scrollTop($(".chats").prop("scrollHeight"));
     });
   };
+
+  // Web Socket Methods
+  onSocketConnect = (): void => {
+    wsClient.subscribe("/topic/messages", (message: Message) => {
+      console.log("Received:", message);
+
+      if (this.state.sent) {
+        this.setState({
+          sent: false,
+        });
+      } else {
+        const msg = JSON.parse(message.body);
+        msg.username = "Some User";
+        this.setState({
+          chats: [...this.state.chats, msg],
+        });
+        this.toRecentChats();
+      }
+    });
+  };
+  onSocketError = (): void => {};
 }
