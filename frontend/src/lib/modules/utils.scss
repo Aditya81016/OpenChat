@@ -5,3 +5,15 @@
 @mixin transition($target: all, $curve: ease-in, $duration: 250ms) {
   transition: $target $curve $duration;
 }
+
+@keyframes blink-cursor {
+  from {
+    @apply border-amber-500;
+  }
+  50% {
+    @apply border-amber-500/50;
+  }
+  to {
+    @apply border-amber-500;
+  }
+}

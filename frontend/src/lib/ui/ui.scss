@@ -180,3 +180,42 @@
     @apply text-white;
   }
 }
+
+.text-slide.ui {
+  @apply w-min flex gap-1;
+
+  > .text {
+    @apply overflow-hidden whitespace-nowrap pr-1 border-r-4 border-amber-500;
+    letter-spacing: 0.1rem;
+    animation: blink-cursor 1s linear infinite;
+  }
+  // > .cursor {
+  //   @apply w-1 h-6 bg-amber-500;
+  // }
+}
+
+.state.ui {
+  @apply w-screen h-screen fixed top-0 left-0
+  flex justify-center items-center
+  backdrop-blur-sm;
+
+  .element {
+    @apply flex flex-col gap-5 justify-center items-center;
+  }
+
+  &.dark {
+    @apply bg-slate-900/60;
+  }
+
+  &.light {
+    @apply bg-slate-100/60;
+  }
+
+  &.stable {
+    @apply hidden;
+  }
+
+  &.connecting {
+    @apply animate-pulse;
+  }
+}

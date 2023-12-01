@@ -30,7 +30,7 @@ export default class ThemeToggle extends Component<Props> {
     }
 
     return (
-      <div className="theme-toggle">
+      <div className="theme-toggle component">
         <Button icon={icon} callback={callback} disabled={disabled} />
       </div>
     );

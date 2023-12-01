@@ -5,7 +5,7 @@ import { over } from "stompjs";
 
 // Redux theme store
 function themeHandler(
-  state = { theme: Theme.light, icon: "sun" },
+  state = { theme: Theme.dark, icon: "moon" },
   action: Action
 ) {
   switch (action.type) {

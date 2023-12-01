@@ -15,7 +15,7 @@
 .ui-library.layout {
   @apply p-10 max-md:p-3;
   > .toggles {
-    @apply fixed bottom-5 right-5 z-10 flex gap-5;
+    @apply fixed bottom-5 right-5 z-[51] flex gap-5;
   }
 
   > .details {

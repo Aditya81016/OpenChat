@@ -1,24 +1,28 @@
-import { Component, ElementType, ReactNode, useState } from "react";
+import {
+  Component,
+  ElementType,
+  ReactElement,
+  ReactNode,
+  useState,
+} from "react";
 import { themeStore } from "../lib/modules/store";
-import ThemeToggle from "../lib/components/theme-toggle";
-import Button from "../lib/ui/button";
 
 interface Props {
   title: string;
   body: string;
   components: ElementType[];
+  buttons: ReactElement<any, any>[];
+  disabled: boolean;
 }
 
 export default class UILibraryLayout extends Component<Props> {
   state = {
     theme: themeStore.getState().theme,
-    disabled: false,
-    disableIcon: "check",
   };
 
   render(): ReactNode {
-    const { title, body, components } = this.props;
-    const { theme, disabled, disableIcon } = this.state;
+    const { title, body, components, buttons, disabled } = this.props;
+    const { theme } = this.state;
 
     // handle theme
     themeStore.subscribe(() => {
@@ -30,10 +34,9 @@ export default class UILibraryLayout extends Component<Props> {
     return (
       <div className={`ui-library layout ${theme}`}>
         <div className="toggles">
-          <ThemeToggle />
-          <div className="disable-toggle">
-            <Button icon={disableIcon} callback={this.toggleDisable} />
-          </div>
+          {buttons.map((button, key) => (
+            <>{button}</>
+          ))}
         </div>
         <div className="details">
           <h1>{title}</h1>
@@ -50,20 +53,4 @@ export default class UILibraryLayout extends Component<Props> {
       </div>
     );
   }
-
-  toggleDisable = () => {
-    console.log("Runs toggle");
-
-    const { disabled } = this.state;
-    if (disabled)
-      this.setState({
-        disabled: false,
-        disableIcon: "check",
-      });
-    else
-      this.setState({
-        disabled: true,
-        disableIcon: "x",
-      });
-  };
 }

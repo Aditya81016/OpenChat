@@ -1,0 +1,19 @@
+.loading.component {
+  @apply flex flex-col gap-5 justify-center items-center;
+
+  > .loader {
+    @apply w-14 h-14 border-r-2 rounded-full animate-spin;
+  }
+
+  > .text * {
+    @apply font-bold text-sm;
+  }
+
+  &.dark > .loader {
+    @apply border-slate-100;
+  }
+
+  &.light > .loader {
+    @apply border-slate-900;
+  }
+}
