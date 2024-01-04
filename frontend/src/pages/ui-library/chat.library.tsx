@@ -30,6 +30,7 @@ export default class ChatLibrary extends Component {
             time="11:31 AM"
           />
           <ChatBlock
+            username=""
             content="This is content of chat block"
             time="11:31 AM"
             variant={Variant.primary}

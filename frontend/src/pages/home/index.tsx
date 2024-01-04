@@ -6,7 +6,7 @@ import { Variant } from "../../lib/modules/types";
 import { getTime } from "../../lib/modules/utils";
 import $ from "jquery";
 import { wsClient } from "../../lib/modules/store";
-import { Frame, Message } from "stompjs";
+import { Message } from "stompjs";
 
 export default class HomePage extends Component {
   // Variables

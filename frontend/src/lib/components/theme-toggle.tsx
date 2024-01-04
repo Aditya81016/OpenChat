@@ -1,4 +1,4 @@
-import { Component, ReactNode, useState } from "react";
+import { Component, ReactNode } from "react";
 import Button from "../ui/button";
 import { themeStore } from "../modules/store";
 import { Theme } from "../modules/types";
