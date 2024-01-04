@@ -5,7 +5,6 @@ import Button from "../../lib/ui/button";
 import { Variant } from "../../lib/modules/types";
 import { getTime } from "../../lib/modules/utils";
 import $ from "jquery";
-import { Message } from "stompjs";
 
 export default class HomePage extends Component {
   // Variables

@@ -1,7 +1,5 @@
 import { Action, createStore } from "redux";
 import { Theme } from "./types";
-import SockJS from "sockjs-client";
-import { over } from "stompjs";
 
 // Redux theme store
 function themeHandler(
