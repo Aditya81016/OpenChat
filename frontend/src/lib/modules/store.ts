@@ -20,4 +20,4 @@ function themeHandler(
 
 export const themeStore = createStore(themeHandler);
 
-export const wsClient = over(SockJS("http://localhost:8080/ws"));
+// export const wsClient = over(SockJS("http://localhost:8080/ws"));

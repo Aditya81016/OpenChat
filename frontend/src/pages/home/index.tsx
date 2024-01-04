@@ -5,7 +5,6 @@ import Button from "../../lib/ui/button";
 import { Variant } from "../../lib/modules/types";
 import { getTime } from "../../lib/modules/utils";
 import $ from "jquery";
-import { wsClient } from "../../lib/modules/store";
 import { Message } from "stompjs";
 
 export default class HomePage extends Component {
@@ -131,7 +130,6 @@ export default class HomePage extends Component {
 
   componentDidMount(): void {
     this.toRecentChats();
-    wsClient.connect({}, this.onSocketConnect);
   }
 
   // Renders
@@ -166,7 +164,6 @@ export default class HomePage extends Component {
         time: getTime(),
       };
 
-      wsClient.send("/app/messages", {}, JSON.stringify(message));
 
       this.setState({
         value: "",
@@ -186,22 +183,22 @@ export default class HomePage extends Component {
 
   // Web Socket Methods
   onSocketConnect = (): void => {
-    wsClient.subscribe("/topic/messages", (message: Message) => {
-      console.log("Received:", message);
+    // wsClient.subscribe("/topic/messages", (message: Message) => {
+    //   console.log("Received:", message);
 
-      if (this.state.sent) {
-        this.setState({
-          sent: false,
-        });
-      } else {
-        const msg = JSON.parse(message.body);
-        msg.username = "Some User";
-        this.setState({
-          chats: [...this.state.chats, msg],
-        });
-        this.toRecentChats();
-      }
-    });
+    //   if (this.state.sent) {
+    //     this.setState({
+    //       sent: false,
+    //     });
+    //   } else {
+    //     const msg = JSON.parse(message.body);
+    //     msg.username = "Some User";
+    //     this.setState({
+    //       chats: [...this.state.chats, msg],
+    //     });
+    //     this.toRecentChats();
+    //   }
+    // });
   };
   onSocketError = (): void => {};
 }
