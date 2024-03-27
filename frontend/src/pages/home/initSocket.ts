@@ -1,4 +1,3 @@
-import { SocketClient } from "@plume.io/websocket-client";
 import HomePage from ".";
 
 export default async function initSocket(page: HomePage) {

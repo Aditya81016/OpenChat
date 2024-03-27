@@ -1,12 +1,12 @@
 import { Component, FormEvent, ReactNode } from "react";
-import HomeLayout, { UserListData } from "../../layouts/home.layout";
+import HomeLayout from "../../layouts/home.layout";
 import Input from "../../lib/ui/input";
 import Button from "../../lib/ui/button";
 import { Variant } from "../../lib/modules/types";
 import { getTime } from "../../lib/modules/utils";
 import $ from "jquery";
 
-import { SocketClient, User, UserJson } from "@plume.io/websocket-client";
+import { SocketClient, User } from "@plume.io/websocket-client";
 import { faker } from "@faker-js/faker";
 import initSocket from "./initSocket";
 
