@@ -1,203 +1,169 @@
 import { Component, FormEvent, ReactNode } from "react";
-import HomeLayout from "../../layouts/home.layout";
+import HomeLayout, { UserListData } from "../../layouts/home.layout";
 import Input from "../../lib/ui/input";
 import Button from "../../lib/ui/button";
 import { Variant } from "../../lib/modules/types";
 import { getTime } from "../../lib/modules/utils";
 import $ from "jquery";
 
+import { SocketClient, User, UserJson } from "@plume.io/websocket-client";
+import { faker } from "@faker-js/faker";
+import initSocket from "./initSocket";
+
 export default class HomePage extends Component {
-  // Variables
-  state = {
-    chats: [
-      {
-        username: "Some User",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, dolor.",
-        time: "01:51 PM",
-      },
-      {
-        username: "You",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, dolor.",
-        time: "01:51 PM",
-      },
-      {
-        username: "Some User",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, dolor.",
-        time: "01:51 PM",
-      },
-      {
-        username: "Some User",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, dolor.",
-        time: "01:51 PM",
-      },
-      {
-        username: "You",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, dolor.",
-        time: "01:51 PM",
-      },
-      {
-        username: "You",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, dolor.",
-        time: "01:51 PM",
-      },
-    ],
-    userList: [
-      { username: "You", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-      { username: "SomeUser", time: getTime() },
-    ],
-    actionList: [
-      {
-        text: "Administrate",
-        callback: () => {
-          console.log("Administrate");
-        },
-        icon: "user-gear",
-      },
-      {
-        text: "GitHub",
-        callback: () => {
-          console.log("GitHub");
-        },
-        icon: "github",
-        iconParent: "brands",
-      },
-      {
-        text: "About",
-        callback: () => {
-          console.log("About");
-        },
-        icon: "info",
-      },
-    ],
-    value: "",
-    sent: false,
-  };
+	// Variables
+	state = {
+		chats: [],
+		userList: [],
+		actionList: [
+			{
+				text: "Administrate",
+				callback: () => {
+					console.log("Administrate");
+				},
+				icon: "user-gear",
+			},
+			{
+				text: "GitHub",
+				callback: () => {
+					console.log("GitHub");
+				},
+				icon: "github",
+				iconParent: "brands",
+			},
+			{
+				text: "About",
+				callback: () => {
+					console.log("About");
+				},
+				icon: "info",
+			},
+		],
+		value: "",
+		sent: false,
+	};
 
-  // the dropdown tasks
-  dropdownTasks = {
-    // the key is the query for the dropdown targets
-    // the value is an object with method to map to dropdown tasks
-    ".chats": {
-      create: () => {
-        console.log("Create");
-      },
-      read: () => {
-        console.log("Read");
-      },
-      update: () => {
-        console.log("Update");
-      },
-      delete: () => {
-        console.log("Delete");
-      },
-    },
-  };
+	// the dropdown tasks
+	dropdownTasks = {
+		// the key is the query for the dropdown targets
+		// the value is an object with method to map to dropdown tasks
+		".chat": {
+			create: () => {
+				console.log("Create");
+			},
+			read: () => {
+				console.log("Read");
+			},
+			update: () => {
+				console.log("Update");
+			},
+			delete: () => {
+				console.log("Delete");
+			},
+		},
+	};
 
-  render(): ReactNode {
-    const { chats, userList, actionList } = this.state;
+	client = new SocketClient("open-chat");
 
-    return (
-      <HomeLayout
-        chats={chats}
-        TextForm={this.RenderedInput}
-        dropdownTasks={this.dropdownTasks}
-        userList={userList}
-        actions={actionList}
-      />
-    );
-  }
+	render(): ReactNode {
+		const { chats, userList, actionList } = this.state;
 
-  componentDidMount(): void {
-    this.toRecentChats();
-  }
+		return (
+			<HomeLayout
+				chats={chats}
+				TextForm={this.RenderedInput}
+				dropdownTasks={this.dropdownTasks}
+				userList={userList}
+				actions={actionList}
+				username={String(this.client.user?.name)}
+			/>
+		);
+	}
 
-  // Renders
-  RenderedInput = () => {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <Input
-          controllers={[this.state.value, this.setValue]}
-          placeholder="Enter Text"
-        />
-        <Button variant={Variant.primary} icon="paper-plane" type="submit" />
-      </form>
-    );
-  };
+	async componentDidMount() {
+		this.toRecentChats();
 
-  // Methods
-  setValue = (value: string): void => {
-    this.setState({
-      value,
-    });
-  };
+		this.client.user = new User(faker.person.firstName());
+		this.client.initialData = { chats: [] };
+		this.client.connect();
+		await initSocket(this);
+		this.setUsers(this.client?.room?.users);
+		const data = this.client.room.data;
+		if (typeof data === "object") this.setState({ ...data });
+	}
 
-  onSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
+	setUsers = (users: User[]) => {
+		console.log("set users");
+		const userList = [
+			{ username: this.client.user?.name, time: getTime() },
+		];
+		users.forEach((user) => {
+			if (user.name !== this.client.user?.name)
+				userList.push({
+					username: user.name,
+					time: getTime(),
+				});
+		});
+		this.setState({
+			userList,
+		});
+	};
 
-    const { chats, value } = this.state;
+	// Renders
+	RenderedInput = () => {
+		return (
+			<form onSubmit={this.onSubmit}>
+				<Input
+					controllers={[this.state.value, this.setValue]}
+					placeholder="Enter Text"
+				/>
+				<Button
+					variant={Variant.primary}
+					icon="paper-plane"
+					type="submit"
+				/>
+			</form>
+		);
+	};
 
-    if (this.state.value !== "") {
-      const message = {
-        username: "You",
-        content: value,
-        time: getTime(),
-      };
+	// Methods
+	setValue = (value: string): void => {
+		this.setState({
+			value,
+		});
+	};
 
+	onSubmit = (event: FormEvent<HTMLFormElement>): void => {
+		event.preventDefault();
 
-      this.setState({
-        value: "",
-        chats: [...chats, message],
-        sent: true,
-      });
+		const { chats, value } = this.state;
 
-      this.toRecentChats();
-    }
-  };
+		if (this.state.value !== "") {
+			const message = {
+				username: this.client.user?.name,
+				content: value,
+				time: getTime(),
+			};
 
-  toRecentChats = (): void => {
-    setTimeout(() => {
-      $(".chats").scrollTop($(".chats").prop("scrollHeight"));
-    });
-  };
+			this.client.room.updateData({
+				chats: [...chats, message],
+			});
 
-  // Web Socket Methods
-  onSocketConnect = (): void => {
-    // wsClient.subscribe("/topic/messages", (message: Message) => {
-    //   console.log("Received:", message);
+			this.setState({
+				value: "",
+			});
 
-    //   if (this.state.sent) {
-    //     this.setState({
-    //       sent: false,
-    //     });
-    //   } else {
-    //     const msg = JSON.parse(message.body);
-    //     msg.username = "Some User";
-    //     this.setState({
-    //       chats: [...this.state.chats, msg],
-    //     });
-    //     this.toRecentChats();
-    //   }
-    // });
-  };
-  onSocketError = (): void => {};
+			this.toRecentChats();
+		}
+	};
+
+	toRecentChats = (): void => {
+		setTimeout(() => {
+			$(".chats").scrollTop($(".chats").prop("scrollHeight"));
+		});
+	};
+
+	get username() {
+		return `${this.client.user?.name} (You)`;
+	}
 }
